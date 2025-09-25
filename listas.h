@@ -1,0 +1,16 @@
+#ifndef LISTAS_H
+#define LISTAS_H
+
+#define STRING_SIZE 100
+
+typedef struct ListaProdutos{
+    char descricao[STRING_SIZE];
+    int quantidade;
+    float valorUnitario, valorTotal;
+    struct ListaProdutos* prox;
+}ListaProdutos;
+
+ListaProdutos* cria_lista();
+ListaProdutos* insere_lista(ListaProdutos* l);
+
+#endif
