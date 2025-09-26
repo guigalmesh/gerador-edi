@@ -12,13 +12,15 @@ typedef struct Dados{
 
 typedef struct Edi{
     int codigoEstrutura, codigoTipo;
-    int numeroNotaFiscal, data;
-    Dados dadosEmissor, dadosEmissario;
+    char numeroNotaFiscal[STRING_SIZE], data[STRING_SIZE];
+    Dados *dadosEmissor, *dadosReceptor;
     ListaProdutos linha;
     int numeroItens;
     float valorTotalNotas;
 }Edi;
 
-void inserir_edi();
+void string_to_upper(char *str);
+void preencher_dados(Dados *dadosEmissor, Dados *dadosReceptor);
+void inserir_edi(Edi *edi);
 
 #endif
