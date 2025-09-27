@@ -4,19 +4,7 @@
 #include <string.h>
 #include "input.h"
 #include "listas.h"
-
-void flush_input_buffer(){
-    int c;
-    while((c = getchar()) != '\n' && c != EOF);
-}
-
-void string_to_upper(char *str){
-    int i = 0;
-    while(str[i] != '\0'){
-        str[i] = toupper(str[i]);
-        i++;
-    }
-}
+#include "helper.h"
 
 void preencher_dados(Dados *dadosEmissor, Dados *dadosReceptor){
     //Preenche dados da empresa que esta emitindo o EDI

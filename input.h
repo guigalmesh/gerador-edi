@@ -19,8 +19,6 @@ typedef struct Edi{
     float valorTotalNotas;
 }Edi;
 
-void flush_input_buffer();
-void string_to_upper(char *str);
 void preencher_dados(Dados *dadosEmissor, Dados *dadosReceptor);
 void inserir_edi(Edi *edi);
 
