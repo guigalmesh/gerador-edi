@@ -7,7 +7,7 @@
 typedef struct Dados{
     char nome[STRING_SIZE], endereco[STRING_SIZE];
     char cidade[STRING_SIZE], telefone[STRING_SIZE];
-    char cpf[STRING_SIZE], cnpj[STRING_SIZE];
+    char cpfCnpj[STRING_SIZE];
 }Dados;
 
 typedef struct Edi{

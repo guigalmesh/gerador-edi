@@ -8,7 +8,7 @@ ListaProdutos* cria_lista(){
     return NULL;
 }
 
-ListaProdutos* insere_lista(ListaProdutos* l, char desc[STRING_SIZE], int q, float val){
+ListaProdutos* insere_lista(Edi *edi, ListaProdutos* l, char desc[STRING_SIZE], int q, float val){
     ListaProdutos* novoNode = (ListaProdutos*)malloc(sizeof(ListaProdutos));
     if(novoNode == NULL){
         printf("Erro na alocação de novoNode\n");
@@ -23,6 +23,7 @@ ListaProdutos* insere_lista(ListaProdutos* l, char desc[STRING_SIZE], int q, flo
     novoNode->prox = NULL;
 
     if (l == NULL) {
+        edi->linha = novoNode;
         return novoNode;
     } else {
         ListaProdutos* p_atual = l;

@@ -13,44 +13,53 @@ void preencher_dados(Dados *dadosEmissor, Dados *dadosReceptor){
     strcpy(dadosEmissor->endereco, "RUA MARIANO PROCOPIO, N347");
     strcpy(dadosEmissor->cidade, "SANTA MARIA");
     strcpy(dadosEmissor->telefone, "55991111111");
-    strcpy(dadosEmissor->cnpj, "001010100-0001");
-    strcpy(dadosEmissor->cpf, "056.456.500-42");
+    strcpy(dadosEmissor->cpfCnpj, "001010100-0001");
     printf("Dados do emissor inseridos\n");
 
     //Preenche dados da empresa que esta recebendo o EDI
     printf("Iniciando inserção de dados da empresa receptora...\n");
     char cpfOuCnpj;
+    char buffer[100];
 
     printf("Insira o nome da empresa: \n");
-    fgets(dadosReceptor->nome, STRING_SIZE, stdin);
-    string_to_upper(dadosReceptor->nome);
+    fgets(buffer, STRING_SIZE, stdin);
+    string_to_upper(buffer);
+    buffer[strcspn(buffer, "\n")] = '\0';
+    strcpy(dadosReceptor->nome, buffer);
 
     printf("Insira o endereço da empresa: \n");
-    fgets(dadosReceptor->endereco, STRING_SIZE, stdin);
-    string_to_upper(dadosReceptor->endereco);
+    fgets(buffer, STRING_SIZE, stdin);
+    string_to_upper(buffer);
+    buffer[strcspn(buffer, "\n")] = '\0';
+    strcpy(dadosReceptor->endereco, buffer);
 
     printf("Insira cidade da empresa: \n");
-    fgets(dadosReceptor->cidade, STRING_SIZE, stdin);
-    string_to_upper(dadosReceptor->cidade);
+    fgets(buffer, STRING_SIZE, stdin);
+    string_to_upper(buffer);
+    buffer[strcspn(buffer, "\n")] = '\0';
+    strcpy(dadosReceptor->cidade, buffer);
 
     printf("Insira o telefone da empresa: \n");
-    fgets(dadosReceptor->telefone, STRING_SIZE, stdin);
-    string_to_upper(dadosReceptor->telefone);
+    fgets(buffer, STRING_SIZE, stdin);
+    string_to_upper(buffer);
+    buffer[strcspn(buffer, "\n")] = '\0';
+    strcpy(dadosReceptor->telefone, buffer);
 
     printf("Deseja inserir o CPF ou o CNPJ?\n['o' para CPF]\n['x' para CNPJ]\n");
     cpfOuCnpj = getchar();
 
     flush_input_buffer();
 
-    if(cpfOuCnpj == 'x'){
+    if(cpfOuCnpj == 'x')
         printf("Insira o CNPJ: \n");
-        fgets(dadosReceptor->cnpj, STRING_SIZE, stdin);
-    }
-    else{
+    else
         printf("Insira o CPF: \n");
-        fgets(dadosReceptor->cpf, STRING_SIZE, stdin);
-    }
     
+    fgets(buffer, STRING_SIZE, stdin);
+    string_to_upper(buffer);
+    buffer[strcspn(buffer, "\n")] = '\0';
+    strcpy(dadosReceptor->cpfCnpj, buffer);
+
     printf("\nInserção de dados do receptor concluída\n");
 }
 
@@ -74,7 +83,8 @@ void inserir_edi(Edi *edi){
     printf("Começando a inserção da descrição\n");
 
     edi->linha = cria_lista();
-
+    edi->numeroItens = 0;
+    edi->valorTotalNotas = 0;
     int quantidade;
     float valorUnitario;
     char buffer[STRING_SIZE], inserir = 's';
@@ -83,11 +93,15 @@ void inserir_edi(Edi *edi){
         scanf("%d", &quantidade);
         printf("Insira o valor unitario: \n");
         scanf("%f", &valorUnitario);
+        edi->numeroItens += quantidade;
+        edi->valorTotalNotas += valorUnitario * quantidade;
+
         printf("Insira a descrição sobre o produto: \n");
         flush_input_buffer();
         fgets(buffer, STRING_SIZE, stdin);
-        printf("inserindo na lista\n");
-        insere_lista(edi->linha, buffer, quantidade, valorUnitario);
+        string_to_upper(buffer);
+        buffer[strcspn(buffer, "\n")] = '\0';
+        insere_lista(edi, edi->linha, buffer, quantidade, valorUnitario);
 
         printf("Deseja inserir outra linha de produtos?\n['s' para continuar]\n['n' para parar]\n");
         inserir = getchar();
