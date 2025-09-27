@@ -14,11 +14,12 @@ typedef struct Edi{
     int codigoEstrutura, codigoTipo;
     char numeroNotaFiscal[STRING_SIZE], data[STRING_SIZE];
     Dados *dadosEmissor, *dadosReceptor;
-    ListaProdutos linha;
+    ListaProdutos *linha;
     int numeroItens;
     float valorTotalNotas;
 }Edi;
 
+void flush_input_buffer();
 void string_to_upper(char *str);
 void preencher_dados(Dados *dadosEmissor, Dados *dadosReceptor);
 void inserir_edi(Edi *edi);

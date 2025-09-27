@@ -5,6 +5,11 @@
 #include "input.h"
 #include "listas.h"
 
+void flush_input_buffer(){
+    int c;
+    while((c = getchar()) != '\n' && c != EOF);
+}
+
 void string_to_upper(char *str){
     int i = 0;
     while(str[i] != '\0'){
@@ -47,8 +52,7 @@ void preencher_dados(Dados *dadosEmissor, Dados *dadosReceptor){
     printf("Deseja inserir o CPF ou o CNPJ?\n['o' para CPF]\n['x' para CNPJ]\n");
     cpfOuCnpj = getchar();
 
-    int c;
-    while ((c = getchar()) != '\n' && c != EOF);
+    flush_input_buffer();
 
     if(cpfOuCnpj == 'x'){
         printf("Insira o CNPJ: \n");
@@ -74,7 +78,35 @@ void inserir_edi(Edi *edi){
     scanf("%99s", edi->data);
 
     edi->dadosEmissor = (Dados *)malloc(sizeof(Dados));
-    edi->dadosReceptor = malloc(sizeof(Dados));
+    edi->dadosReceptor = (Dados *)malloc(sizeof(Dados));
 
+    flush_input_buffer();
     preencher_dados(edi->dadosEmissor, edi->dadosReceptor);
+
+    printf("Começando a inserção da descrição\n");
+
+    edi->linha = cria_lista();
+
+    int quantidade;
+    float valorUnitario;
+    char buffer[STRING_SIZE], inserir = 's';
+    do{
+        printf("Insira a quantidade: \n");
+        scanf("%d", &quantidade);
+        printf("Insira o valor unitario: \n");
+        scanf("%f", &valorUnitario);
+        printf("Insira a descrição sobre o produto: \n");
+        flush_input_buffer();
+        fgets(buffer, STRING_SIZE, stdin);
+        printf("inserindo na lista\n");
+        insere_lista(edi->linha, buffer, quantidade, valorUnitario);
+
+        printf("Deseja inserir outra linha de produtos?\n['s' para continuar]\n['n' para parar]\n");
+        inserir = getchar();
+        flush_input_buffer();
+        if(inserir == 'n')
+            printf("Descrições inseridas\n");
+        else
+            printf("Inserindo nova descrição\n");
+    }while(inserir != 'n');
 }

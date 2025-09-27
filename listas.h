@@ -11,6 +11,6 @@ typedef struct ListaProdutos{
 }ListaProdutos;
 
 ListaProdutos* cria_lista();
-ListaProdutos* insere_lista(ListaProdutos* l);
+ListaProdutos* insere_lista(ListaProdutos* l, char desc[STRING_SIZE], int q, float val);
 
 #endif
